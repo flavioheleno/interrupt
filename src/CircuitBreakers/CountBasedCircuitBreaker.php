@@ -40,6 +40,13 @@ class CountBasedCircuitBreaker extends AbstractCircuitBreaker {
       );
     }
 
+    /**
+     * @var array{
+     *   state: CircuitStateEnum,
+     *   record: RecordStrategyInterface,
+     *   updatedAt: \DateTimeImmutable
+     * }
+     */
     $data = $item->get();
 
     // half-open && success -> closed
@@ -71,6 +78,13 @@ class CountBasedCircuitBreaker extends AbstractCircuitBreaker {
       );
     }
 
+    /**
+     * @var array{
+     *   state: CircuitStateEnum,
+     *   record: RecordStrategyInterface,
+     *   updatedAt: \DateTimeImmutable
+     * }
+     */
     $data = $item->get();
     $failCount = $data['record']->mark("{$serviceName}.failure");
 

@@ -52,6 +52,13 @@ abstract class AbstractCircuitBreaker implements CircuitBreakerInterface {
       return true;
     }
 
+    /**
+     * @var array{
+     *   state: CircuitStateEnum,
+     *   record: RecordStrategyInterface,
+     *   updatedAt: \DateTimeImmutable
+     * }
+     */
     $data = $item->get();
 
     // if service is unavailable, determine if the cool down interval has passed

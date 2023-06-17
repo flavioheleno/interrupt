@@ -47,6 +47,13 @@ class RateBasedCircuitBreaker extends AbstractCircuitBreaker {
       );
     }
 
+    /**
+     * @var array{
+     *   state: CircuitStateEnum,
+     *   record: RecordStrategyInterface,
+     *   updatedAt: \DateTimeImmutable
+     * }
+     */
     $data = $item->get();
     $data['record']->mark($serviceName);
 
@@ -81,6 +88,13 @@ class RateBasedCircuitBreaker extends AbstractCircuitBreaker {
       );
     }
 
+    /**
+     * @var array{
+     *   state: CircuitStateEnum,
+     *   record: RecordStrategyInterface,
+     *   updatedAt: \DateTimeImmutable
+     * }
+     */
     $data = $item->get();
     $totalCount = $data['record']->mark($serviceName);
     $failCount = $data['record']->mark("{$serviceName}.failure");
