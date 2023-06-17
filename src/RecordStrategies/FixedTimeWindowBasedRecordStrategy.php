@@ -18,7 +18,7 @@ final class FixedTimeWindowBasedRecordStrategy implements RecordStrategyInterfac
    */
   private DateInterval $windowSize;
   /**
-   * @var array<string, array<\DateTimeImmutable, int>>
+   * @var array<string, array{\DateTimeImmutable, int}>
    */
   private array $records = [];
 
@@ -55,11 +55,33 @@ final class FixedTimeWindowBasedRecordStrategy implements RecordStrategyInterfac
     unset($this->records[$key]);
   }
 
-  public function serialize(): ?string {
-    return json_encode($this->records);
+  /**
+   * @return array{
+   *   0: Psr\Clock\ClockInterface,
+   *   1: \DateInterval,
+   *   2: array<string, array<\DateTimeImmutable, int>>
+   * }
+   */
+  public function __serialize(): array {
+    return [
+      $this->clock,
+      $this->windowSize,
+      $this->records
+    ];
   }
 
-  public function unserialize(string $data): void {
-    $this->records = json_decode($data, true);
+  /**
+   * @param array{
+   *   0: Psr\Clock\ClockInterface,
+   *   1: \DateInterval,
+   *   2: array<string, array<\DateTimeImmutable, int>>
+   * } $data
+   */
+  public function __unserialize(array $data): void {
+    [
+      $this->clock,
+      $this->windowSize,
+      $this->records
+    ] = $data;
   }
 }

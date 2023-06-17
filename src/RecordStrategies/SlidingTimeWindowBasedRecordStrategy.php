@@ -23,7 +23,7 @@ final class SlidingTimeWindowBasedRecordStrategy implements RecordStrategyInterf
    */
   private int $maxRecords;
   /**
-   * @var array<string, \DateTimeImmutable>
+   * @var array<string, \DateTimeImmutable[]>
    */
   private array $records = [];
 
@@ -79,11 +79,37 @@ final class SlidingTimeWindowBasedRecordStrategy implements RecordStrategyInterf
     unset($this->records[$key]);
   }
 
-  public function serialize(): ?string {
-    return json_encode($this->records);
+  /**
+   * @return array{
+   *   0: Psr\Clock\ClockInterface,
+   *   1: \DateInterval,
+   *   2: int,
+   *   3: array<string, \DateTimeImmutable[]>
+   * }
+   */
+  public function __serialize(): array {
+    return [
+      $this->clock,
+      $this->windowSize,
+      $this->maxRecords,
+      $this->records
+    ];
   }
 
-  public function unserialize(string $data): void {
-    $this->records = json_decode($data, true);
+  /**
+   * @param array{
+   *   0: Psr\Clock\ClockInterface,
+   *   1: \DateInterval,
+   *   2: int,
+   *   3: array<string, \DateTimeImmutable[]>
+   * } $data
+   */
+  public function __unserialize(array $data): void {
+    [
+      $this->clock,
+      $this->windowSize,
+      $this->maxRecords,
+      $this->records
+    ] = $data;
   }
 }
