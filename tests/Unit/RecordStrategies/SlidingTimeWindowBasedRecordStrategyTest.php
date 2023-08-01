@@ -31,6 +31,25 @@ final class SlidingTimeWindowBasedRecordStrategyTest extends TestCase {
     $this->assertSame(3, $strategy->mark('key')); // C at T0 + 5s = {A, B, C}
     $this->assertSame(2, $strategy->mark('key')); // D at T0 + Window Size = {C, D}
     $this->assertSame(3, $strategy->mark('key')); // E at T0 + Window Size + 1s = {C, D, E}
-    $this->assertSame(true, true);
+  }
+
+  public function testClear(): void {
+    $clock = $this->createMock(ClockInterface::class);
+    $strategy = new SlidingTimeWindowBasedRecordStrategy($clock);
+
+    $dateTime = new DateTimeImmutable();
+    $clock->method('now')
+      ->willReturn(
+        $dateTime,
+        $dateTime->add(new DateInterval('PT1S')),
+        $dateTime->add(new DateInterval('PT2S')),
+        $dateTime->add(new DateInterval('PT3S'))
+      );
+
+    $this->assertSame(1, $strategy->mark('key'));
+    $this->assertSame(2, $strategy->mark('key'));
+    $this->assertSame(3, $strategy->mark('key'));
+    $strategy->clear('key');
+    $this->assertSame(1, $strategy->mark('key'));
   }
 }

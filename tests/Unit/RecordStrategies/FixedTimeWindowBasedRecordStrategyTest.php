@@ -32,4 +32,24 @@ final class FixedTimeWindowBasedRecordStrategyTest extends TestCase {
     $this->assertSame(1, $strategy->mark('key')); // D at T0 + Window Size = {D}
     $this->assertSame(2, $strategy->mark('key')); // E at T0 + Window Size + 1s = {D, E}
   }
+
+  public function testClear(): void {
+    $clock = $this->createMock(ClockInterface::class);
+    $strategy = new FixedTimeWindowBasedRecordStrategy($clock);
+
+    $dateTime = new DateTimeImmutable();
+    $clock->method('now')
+      ->willReturn(
+        $dateTime,
+        $dateTime->add(new DateInterval('PT1S')),
+        $dateTime->add(new DateInterval('PT2S')),
+        $dateTime->add(new DateInterval('PT3S'))
+      );
+
+    $this->assertSame(1, $strategy->mark('key'));
+    $this->assertSame(2, $strategy->mark('key'));
+    $this->assertSame(3, $strategy->mark('key'));
+    $strategy->clear('key');
+    $this->assertSame(1, $strategy->mark('key'));
+  }
 }
