@@ -11,7 +11,8 @@ use Scale\Time\Hours;
 
 class CountBasedCircuitBreaker extends AbstractCircuitBreaker {
   /**
-   * Failure count threshold, after which CircuitBreaker state goes from CLOSED to OPEN.
+   * Failure count threshold, after which CircuitBreaker state goes from CircuitStateEnum::CLOSED
+   * to CircuitStateEnum::OPEN
    * Default: 20
    */
   protected int $failureCount;

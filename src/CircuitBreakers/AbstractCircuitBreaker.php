@@ -15,7 +15,8 @@ abstract class AbstractCircuitBreaker implements CircuitBreakerInterface {
   protected CacheItemPoolInterface $cacheItemPool;
   protected RecordStrategyInterface $recordStrategy;
   /**
-   * Cool down interval in seconds, after which CircuitBreaker state goes from OPEN to HALF_OPEN.
+   * Cool down interval in seconds, after which CircuitBreaker state goes from CircuitStateEnum::OPEN
+   * to CircuitStateEnum::HALF_OPEN
    * Default: 10 seconds
    */
   protected DateInterval $coolDownInterval;

@@ -11,7 +11,8 @@ use Scale\Time\Hours;
 
 class RateBasedCircuitBreaker extends AbstractCircuitBreaker {
   /**
-   * Failure rate threshold, after which CircuitBreaker state goes from CLOSED to OPEN.
+   * Failure rate threshold, after which CircuitBreaker state goes from CircuitStateEnum::CLOSED
+   * to CircuitStateEnum::OPEN
    * Default: 50%
    */
   protected float $failureRate;

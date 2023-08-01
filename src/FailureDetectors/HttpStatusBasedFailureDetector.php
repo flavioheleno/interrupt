@@ -9,6 +9,9 @@ use Teapot\StatusCode\All;
 use Teapot\StatusCode\RFC\RFC2774;
 use Teapot\StatusCode\RFC\RFC6585;
 
+/**
+ * Detects failure based on HTTP Response Status Code (5xx range)
+ */
 class HttpStatusBasedFailureDetector implements FailureDetectorInterface {
   /**
    * @var int[]

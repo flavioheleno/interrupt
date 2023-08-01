@@ -76,13 +76,19 @@ implementation that generates service names from the request URI components.
 
 ### Record Strategy
 
-The [Record Strategy](src/Contracts/RecordStrategyInterface.php) determines how Interrupt keeps track of failure events during a period of time.
+The [Record Strategy](src/Contracts/RecordStrategyInterface.php) determines how Interrupt keeps track of failure events
+during a period of time.
 
-A [FixedTimeWindowBasedRecordStrategy](src/RecordStrategies/FixedTimeWindowBasedRecordStrategy.php) that uses a predefined time interval to register failure records within its duration. Once the interval is over, the recorded failures are cleaned up and a new fixed interval starts.
+A [FixedTimeWindowBasedRecordStrategy](src/RecordStrategies/FixedTimeWindowBasedRecordStrategy.php) that uses a
+predefined time interval to register failure records within its duration. Once the interval is over, the recorded
+failures are cleaned up and a new fixed interval starts.
 
-A [SlidingTimeWindowBasedRecordStrategy](src/RecordStrategies/SlidingTimeWindowBasedRecordStrategy.php) that uses a moving or shifting time interval to register failure records. Instead of fixed intervals, the time window slides (or moves along) with the failure stream.
+A [SlidingTimeWindowBasedRecordStrategy](src/RecordStrategies/SlidingTimeWindowBasedRecordStrategy.php) that uses a
+moving or shifting time interval to register failure records. Instead of fixed intervals, the time window slides (or
+moves along) with the failure stream.
 
-The *Sliding Time Window* approach allows for continuous analysis of the most recent data while still considering a specific timeframe.
+The *Sliding Time Window* approach allows for continuous analysis of the most recent data while still considering a
+specific timeframe.
 
 > **Note**
 > Both strategies require a [PSR-20](https://www.php-fig.org/psr/psr-20/) compatible Clock implementation.
