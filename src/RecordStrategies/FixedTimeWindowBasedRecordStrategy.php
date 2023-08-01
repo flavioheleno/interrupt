@@ -57,7 +57,7 @@ final class FixedTimeWindowBasedRecordStrategy implements RecordStrategyInterfac
 
   /**
    * @return array{
-   *   0: Psr\Clock\ClockInterface,
+   *   0: \Psr\Clock\ClockInterface,
    *   1: \DateInterval,
    *   2: array<string, array<\DateTimeImmutable, int>>
    * }
@@ -72,7 +72,7 @@ final class FixedTimeWindowBasedRecordStrategy implements RecordStrategyInterfac
 
   /**
    * @param array{
-   *   0: Psr\Clock\ClockInterface,
+   *   0: \Psr\Clock\ClockInterface,
    *   1: \DateInterval,
    *   2: array<string, array<\DateTimeImmutable, int>>
    * } $data

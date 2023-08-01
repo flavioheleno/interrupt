@@ -50,8 +50,8 @@ class RateBasedCircuitBreaker extends AbstractCircuitBreaker {
 
     /**
      * @var array{
-     *   state: CircuitStateEnum,
-     *   record: RecordStrategyInterface,
+     *   state: \Interrupt\CircuitBreakers\CircuitStateEnum,
+     *   record: \Interrupt\Contracts\RecordStrategyInterface,
      *   updatedAt: \DateTimeImmutable
      * }
      */
@@ -91,8 +91,8 @@ class RateBasedCircuitBreaker extends AbstractCircuitBreaker {
 
     /**
      * @var array{
-     *   state: CircuitStateEnum,
-     *   record: RecordStrategyInterface,
+     *   state: \Interrupt\CircuitBreakers\CircuitStateEnum,
+     *   record: \Interrupt\Contracts\RecordStrategyInterface,
      *   updatedAt: \DateTimeImmutable
      * }
      */

@@ -55,8 +55,8 @@ abstract class AbstractCircuitBreaker implements CircuitBreakerInterface {
 
     /**
      * @var array{
-     *   state: CircuitStateEnum,
-     *   record: RecordStrategyInterface,
+     *   state: \Interrupt\CircuitBreakers\CircuitStateEnum,
+     *   record: \Interrupt\Contracts\RecordStrategyInterface,
      *   updatedAt: \DateTimeImmutable
      * }
      */

@@ -81,7 +81,7 @@ final class SlidingTimeWindowBasedRecordStrategy implements RecordStrategyInterf
 
   /**
    * @return array{
-   *   0: Psr\Clock\ClockInterface,
+   *   0: \Psr\Clock\ClockInterface,
    *   1: \DateInterval,
    *   2: int,
    *   3: array<string, \DateTimeImmutable[]>
@@ -98,7 +98,7 @@ final class SlidingTimeWindowBasedRecordStrategy implements RecordStrategyInterf
 
   /**
    * @param array{
-   *   0: Psr\Clock\ClockInterface,
+   *   0: \Psr\Clock\ClockInterface,
    *   1: \DateInterval,
    *   2: int,
    *   3: array<string, \DateTimeImmutable[]>
