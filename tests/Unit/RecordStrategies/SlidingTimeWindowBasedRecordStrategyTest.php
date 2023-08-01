@@ -52,4 +52,15 @@ final class SlidingTimeWindowBasedRecordStrategyTest extends TestCase {
     $strategy->clear('key');
     $this->assertSame(1, $strategy->mark('key'));
   }
+
+  public function testSerialization(): void {
+    $clock = $this->createMock(ClockInterface::class);
+    $strategy = new SlidingTimeWindowBasedRecordStrategy($clock);
+
+    $this->assertEquals($strategy, unserialize(serialize($strategy)));
+
+    $strategy->mark('key');
+
+    $this->assertEquals($strategy, unserialize(serialize($strategy)));
+  }
 }
