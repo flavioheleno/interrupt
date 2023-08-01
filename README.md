@@ -24,10 +24,10 @@ composer require flavioheleno/interrupt
 // any PSR-18 compliant HTTP Client implementation
 // $httpClient = new ...
 
-// service name is based on its scheme + host + port
+// resolves the service name to its scheme + host + port
 // eg. https://api.example.org/v1 -> https://api.example.org
 // eg. https://api.example.org:5000/v1 -> https://api.example.org:5000
-$serviceNameInflector = Interrupt\ServiceNameInflectors\UriBasedInflector();
+$serviceNameResolver = Interrupt\ServiceNameResolvers\UriBasedResolver();
 
 // any PSR-6 compliant Cache Item Pool implementation
 // $cacheItemPool = new ...
@@ -51,7 +51,7 @@ $failureDetector = new Interrupt\FailureDetectors\HttpStatusBasedFailureDetector
 
 $client = new Psr18Wrapper(
   $httpClient,
-  $serviceNameInflector,
+  $serviceNameResolver,
   $circuitBreaker,
   $failureDetector
 );
@@ -65,13 +65,13 @@ $client = new Psr18Wrapper(
 Interrupt is built around the concept of components to allow easy integration with different environments or frameworks,
 making it a flexible and customizable library.
 
-### Service Name Inflector
+### Service Name Resolver
 
 To keep track of services accessed by the wrapped client, Interrupt uses the concept of
-[Service Name Inflector](src/Contracts/ServiceNameInflectorInterface.php), that generates consistent service names
+[Service Name Resolvers](src/Contracts/ServiceNameResolverInterface.php), that generates consistent service names
 based on request attributes.
 
-Interrupt is distributed with [UriBasedInflector](src/ServiceNameInflectors/UriBasedInflector.php), an inflector
+Interrupt is distributed with [UriBasedResolver](src/ServiceNameResolvers/UriBasedResolver.php), a resolver
 implementation that generates service names from the request URI components.
 
 ### Record Strategy

@@ -7,7 +7,7 @@ use Exception;
 use Interrupt\CircuitBreakers\CircuitStateEnum;
 use Interrupt\Contracts\CircuitBreakerInterface;
 use Interrupt\Contracts\FailureDetectorInterface;
-use Interrupt\Contracts\ServiceNameInflectorInterface;
+use Interrupt\Contracts\ServiceNameResolverInterface;
 use Interrupt\Exceptions\ServiceUnavailableException;
 use Interrupt\Psr18Wrapper;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -21,10 +21,10 @@ use RuntimeException;
 #[CoversClass(Psr18Wrapper::class)]
 final class Psr18WrapperTest extends TestCase {
   public function testServiceUnavailableException(): void {
-    $serviceNameInflector = $this->createMock(ServiceNameInflectorInterface::class);
-    $serviceNameInflector
+    $serviceNameResolver = $this->createMock(ServiceNameResolverInterface::class);
+    $serviceNameResolver
       ->expects($this->once())
-      ->method('extract')
+      ->method('handle')
       ->willReturn('test');
 
     $circuitBreaker = $this->createMock(CircuitBreakerInterface::class);
@@ -36,7 +36,7 @@ final class Psr18WrapperTest extends TestCase {
 
     $psr18Wrapper = new Psr18Wrapper(
       $this->createMock(ClientInterface::class),
-      $serviceNameInflector,
+      $serviceNameResolver,
       $circuitBreaker,
       $this->createMock(FailureDetectorInterface::class)
     );
@@ -48,10 +48,10 @@ final class Psr18WrapperTest extends TestCase {
   }
 
   public function testRequestFailure(): void {
-    $serviceNameInflector = $this->createMock(ServiceNameInflectorInterface::class);
-    $serviceNameInflector
+    $serviceNameResolver = $this->createMock(ServiceNameResolverInterface::class);
+    $serviceNameResolver
       ->expects($this->once())
-      ->method('extract')
+      ->method('handle')
       ->willReturn('test');
 
     $circuitBreaker = $this->createMock(CircuitBreakerInterface::class);
@@ -85,7 +85,7 @@ final class Psr18WrapperTest extends TestCase {
 
     $psr18Wrapper = new Psr18Wrapper(
       $client,
-      $serviceNameInflector,
+      $serviceNameResolver,
       $circuitBreaker,
       $failureDetector
     );
@@ -94,10 +94,10 @@ final class Psr18WrapperTest extends TestCase {
   }
 
   public function testRequestSuccess(): void {
-    $serviceNameInflector = $this->createMock(ServiceNameInflectorInterface::class);
-    $serviceNameInflector
+    $serviceNameResolver = $this->createMock(ServiceNameResolverInterface::class);
+    $serviceNameResolver
       ->expects($this->once())
-      ->method('extract')
+      ->method('handle')
       ->willReturn('test');
 
     $circuitBreaker = $this->createMock(CircuitBreakerInterface::class);
@@ -131,7 +131,7 @@ final class Psr18WrapperTest extends TestCase {
 
     $psr18Wrapper = new Psr18Wrapper(
       $client,
-      $serviceNameInflector,
+      $serviceNameResolver,
       $circuitBreaker,
       $failureDetector
     );
@@ -140,10 +140,10 @@ final class Psr18WrapperTest extends TestCase {
   }
 
   public function testRequestThrowsClientException(): void {
-    $serviceNameInflector = $this->createMock(ServiceNameInflectorInterface::class);
-    $serviceNameInflector
+    $serviceNameResolver = $this->createMock(ServiceNameResolverInterface::class);
+    $serviceNameResolver
       ->expects($this->once())
-      ->method('extract')
+      ->method('handle')
       ->willReturn('test');
 
     $circuitBreaker = $this->createMock(CircuitBreakerInterface::class);
@@ -169,7 +169,7 @@ final class Psr18WrapperTest extends TestCase {
 
     $psr18Wrapper = new Psr18Wrapper(
       $client,
-      $serviceNameInflector,
+      $serviceNameResolver,
       $circuitBreaker,
       $this->createMock(FailureDetectorInterface::class)
     );
@@ -180,10 +180,10 @@ final class Psr18WrapperTest extends TestCase {
   }
 
   public function testRequestThrowsGenericException(): void {
-    $serviceNameInflector = $this->createMock(ServiceNameInflectorInterface::class);
-    $serviceNameInflector
+    $serviceNameResolver = $this->createMock(ServiceNameResolverInterface::class);
+    $serviceNameResolver
       ->expects($this->once())
-      ->method('extract')
+      ->method('handle')
       ->willReturn('test');
 
     $circuitBreaker = $this->createMock(CircuitBreakerInterface::class);
@@ -207,7 +207,7 @@ final class Psr18WrapperTest extends TestCase {
 
     $psr18Wrapper = new Psr18Wrapper(
       $client,
-      $serviceNameInflector,
+      $serviceNameResolver,
       $circuitBreaker,
       $this->createMock(FailureDetectorInterface::class)
     );

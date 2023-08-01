@@ -1,13 +1,13 @@
 <?php
 declare(strict_types = 1);
 
-namespace Interrupt\ServiceNameInflectors;
+namespace Interrupt\ServiceNameResolvers;
 
-use Interrupt\Contracts\ServiceNameInflectorInterface;
+use Interrupt\Contracts\ServiceNameResolverInterface;
 use Psr\Http\Message\RequestInterface;
 
-final class UriBasedInflector implements ServiceNameInflectorInterface {
-  public function extract(RequestInterface $request): string {
+final class UriBasedResolver implements ServiceNameResolverInterface {
+  public function handle(RequestInterface $request): string {
     $uri = $request->getUri();
 
     $name = $uri->getScheme();

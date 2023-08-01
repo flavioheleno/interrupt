@@ -5,9 +5,9 @@ namespace Interrupt\Contracts;
 
 use Psr\Http\Message\RequestInterface;
 
-interface ServiceNameInflectorInterface {
+interface ServiceNameResolverInterface {
   /**
    * Return a service name from the given $request
    */
-  public function extract(RequestInterface $request): string;
+  public function handle(RequestInterface $request): string;
 }

@@ -1,16 +1,16 @@
 <?php
 declare(strict_types = 1);
 
-namespace Interrupt\Test\Unit\ServiceNameInflectors;
+namespace Interrupt\Test\Unit\ServiceNameResolvers;
 
-use Interrupt\ServiceNameInflectors\UriBasedInflector;
+use Interrupt\ServiceNameResolvers\UriBasedResolver;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 
-#[CoversClass(UriBasedInflector::class)]
-final class UriBasedInflectorTest extends TestCase {
+#[CoversClass(UriBasedResolver::class)]
+final class UriBasedResolverTest extends TestCase {
   public function testExtractStdPort(): void {
     $uri = $this->createMock(UriInterface::class);
     $uri->method('getScheme')->willReturn('http');
@@ -20,9 +20,9 @@ final class UriBasedInflectorTest extends TestCase {
     $request = $this->createMock(ServerRequestInterface::class);
     $request->method('getUri')->willReturn($uri);
 
-    $inflector = new UriBasedInflector();
+    $resolver = new UriBasedResolver();
 
-    $this->assertSame('http://example.com', $inflector->extract($request));
+    $this->assertSame('http://example.com', $resolver->handle($request));
   }
 
   public function testExtractCustomPort(): void {
@@ -34,8 +34,8 @@ final class UriBasedInflectorTest extends TestCase {
     $request = $this->createMock(ServerRequestInterface::class);
     $request->method('getUri')->willReturn($uri);
 
-    $inflector = new UriBasedInflector();
+    $resolver = new UriBasedResolver();
 
-    $this->assertSame('http://example.com:8080', $inflector->extract($request));
+    $this->assertSame('http://example.com:8080', $resolver->handle($request));
   }
 }
